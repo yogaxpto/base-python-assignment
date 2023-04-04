@@ -2,8 +2,6 @@ name: Build and Cache Docker Compose Image
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
   build:

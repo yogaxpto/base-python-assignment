@@ -1,16 +1,16 @@
 name: Build and Cache Docker Compose Image
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
     - name: Build Docker Compose Image
       run: |
@@ -26,20 +26,20 @@ jobs:
     - name: Cache Docker Compose Images
       uses: actions/cache@v2
       with:
+        path: docker-compose-images.tar
+        key: docker-compose-images-${{ github.sha }}
+        restore-keys: docker-compose-images-
+
+  use-cache:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Restore Docker Compose Images from Tar File
+        uses: actions/cache@v2
+        with:
           path: docker-compose-images.tar
           key: docker-compose-images-${{ github.sha }}
-          restore-keys: docker-compose-images-
-
-    use-cache:
-        needs: build
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Restore Docker Compose Images from Tar File
-              uses: actions/cache@v2
-              with:
-                  path: docker-compose-images.tar
-                  key: docker-compose-images-${{ github.sha }}
 
     - name: Load Docker Compose Images from Tar File
       run: |

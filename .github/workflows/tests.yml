@@ -1,0 +1,42 @@
+name: Unit Tests
+
+on:
+  workflow_run:
+    workflows:
+      - "Build and Cache Docker Compose Image"
+    types:
+      - completed
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Restore Docker Compose Images from Cache
+        uses: actions/cache@v3
+        with:
+          path: docker-compose-images.tar
+          key: docker-compose-images-${{ github.sha }}
+          restore-keys: docker-compose-images-
+
+      - name: Load Docker Compose Images
+        run: |
+          docker load -i docker-compose-images.tar
+
+      - name: Load .env File
+        run: |
+          set -a
+          source .env
+          set +a
+
+      - name: Install pytest
+        run: |
+          docker-compose exec $BASE_SERVICE pip install pytest
+
+      - name: Run Unit Tests and Coverage
+        run: |
+          docker-compose up -d  # Start the services defined in docker-compose.yml
+          docker-compose exec $BASE_SERVICE pytest --cov=$BASE_SERVICE  # Run unit tests with coverage in the appropriate service
+          docker-compose down  # Stop and remove the services

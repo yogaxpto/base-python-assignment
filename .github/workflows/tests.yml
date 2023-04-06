@@ -3,7 +3,7 @@ name: Unit Tests
 on:
   workflow_run:
     workflows:
-      - "Build and Cache Docker Compose Image"
+      - "Verification"
     types:
       - completed
 

@@ -31,6 +31,19 @@ jobs:
       - Build-docker
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip ruff
+          pip install -r requirements.txt
+      - name: Lint with Ruff
+        run: |
+          ruff --format=github --target-version=py37 .
+
+  Validation:
+    needs:
+      - Verification
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
 
       - name: Restore Docker Compose Images from Cache

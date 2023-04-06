@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3-alpine
 
 # Ignore root warnings from pip
 ENV PIP_ROOT_USER_ACTION=ignore

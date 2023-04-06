@@ -12,13 +12,11 @@ jobs:
 
       - name: Build Docker Compose Image
         run: |
-          # build your Docker Compose services and tag the images with a unique identifier
           docker-compose build --build-arg GIT_COMMIT=${{ github.sha }}
           docker-compose push
 
       - name: Save Docker Compose Images to Tar File
         run: |
-          # save the Docker Compose images to a tar file
           docker images --format "{{.Repository}}:{{.Tag}}" | xargs docker save -o docker-compose-images.tar
 
       - name: Cache Docker Compose Images

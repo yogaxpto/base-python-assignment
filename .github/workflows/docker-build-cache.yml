@@ -17,7 +17,7 @@ jobs:
 
       - name: Save Docker Compose Images to Tar File
         run: |
-          docker images --format "{{.Repository}}:{{.Tag}}" | xargs docker save -o docker-compose-images.tar
+          docker save -o docker-compose-images.tar $(docker-compose config --services)
 
       - name: Cache Docker Compose Images
         uses: actions/cache@v3

@@ -27,6 +27,8 @@ jobs:
           restore-keys: docker-compose-images-
 
   Verification:
+    needs:
+      - Build-docker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

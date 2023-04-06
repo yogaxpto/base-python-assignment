@@ -12,7 +12,7 @@ jobs:
 
       - name: Build Docker Compose Image
         run: |
-          docker-compose build --build-arg GIT_COMMIT=${{ github.sha }}
+          docker-compose build
           docker-compose push
 
       - name: Save Docker Compose Images to Tar File

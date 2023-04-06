@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  build and cache image:
+  build-and-cache-image:
     runs-on: ubuntu-latest
 
     steps:

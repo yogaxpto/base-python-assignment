@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Build Docker Compose Image
         run: |
@@ -22,7 +22,7 @@ jobs:
           docker images --format "{{.Repository}}:{{.Tag}}" | xargs docker save -o docker-compose-images.tar
 
       - name: Cache Docker Compose Images
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: docker-compose-images.tar
           key: docker-compose-images-${{ github.sha }}
@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Restore Docker Compose Images from Tar File
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: docker-compose-images.tar
           key: docker-compose-images-${{ github.sha }}

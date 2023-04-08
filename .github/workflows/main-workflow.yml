@@ -1,0 +1,23 @@
+name: Main Workflow
+
+on:
+  push:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build
+        uses: actions/checkout@v2
+
+      - name: Validate
+        run: npm run build
+
+      - name: Test
+        run: npm run test
+
+      - name: Deploy to pre-production
+        uses: ./.github/actions/deploy
+        with:
+          environment: production

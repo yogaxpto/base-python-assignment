@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  Build-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker Compose Image
+        run: |
+          docker-compose build
+          docker-compose push
+
+      - name: Save Docker Compose Images to Tar File
+        run: |
+          docker save -o docker-compose-images.tar $(docker-compose config --services)
+
+  Cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Docker Compose Images
+        uses: actions/cache@v3
+        with:
+          path: docker-compose-images.tar
+          key: docker-compose-images-${{ github.sha }}
+          restore-keys: docker-compose-images-

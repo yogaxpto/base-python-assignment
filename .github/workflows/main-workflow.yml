@@ -9,7 +9,9 @@ jobs:
 
     steps:
       - name: Build
-        uses: ./.github/actions/build
+        uses:
+          - actions/checkout@v3
+          - ./.github/actions/build
 
   Validate:
     runs-on: ubuntu-latest

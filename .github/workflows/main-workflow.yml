@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Build
-        uses: ./.github/actions/build
+        uses: .github/actions/build
 
   Validate:
     runs-on: ubuntu-latest

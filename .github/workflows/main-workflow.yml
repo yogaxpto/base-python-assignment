@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Build
-        uses: actions/checkout@v2
+        uses: ./.github/actions/build
 
   Validate:
     runs-on: ubuntu-latest
@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Validate
-        run: npm run build
+        uses: ./.github/actions/validate
 
   Test:
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Test
-        run: npm run test
+        uses: ./.github/actions/test
 
   Deploy:
     runs-on: ubuntu-latest

@@ -12,12 +12,15 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Validate
+        needs: Build
         run: npm run build
 
       - name: Test
+        needs: Validate
         run: npm run test
 
       - name: Deploy to pre-production
+        needs: Test
         uses: ./.github/actions/deploy
         with:
           environment: production
